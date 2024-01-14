@@ -115,18 +115,7 @@ function displaySearchResults(data) {
 
         columns.forEach(column => {
             const td = document.createElement('td');
-            
-            // Check if the column is the URL column
-            if (column === 'Ссылка на объявление на сайте goszakup') {
-                const link = document.createElement('a');
-                link.href = item[column];
-                link.textContent = item[column];
-                link.target = '_blank'; // Open the link in a new tab
-                td.appendChild(link);
-            } else {
-                td.textContent = item[column];
-            }
-
+            td.textContent = item[column];
             row.appendChild(td);
         });
 
