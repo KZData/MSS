@@ -1,0 +1,93 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #FFFFFF;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    height: 100px;
+    background-color: #146366;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+}
+
+.header h1 {
+    font-size: 40px;
+}
+
+.header h5 {
+    font-size: 12px;
+
+}
+
+.main {
+    min-height: calc(100vh - 160px);
+    padding: 20px;
+}
+
+.footer {
+    height: 70px;
+    background-color: #146366;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+}
+
+.footer p {
+    font-size: 16px;
+}
+
+.bar-plot {
+    width: 50%;
+    height: 400px;
+    margin-left: 100px;
+    text-align: center;
+    align-content: flex-start;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    font-weight: normal;
+    font-size: 18px;
+    background-color: #3D9699;
+    color: #ffffff;
+}
+
+td {
+    font-size: 16px;
+}
+
+input {
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 12px;
+    background-color: #3D9699;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #003638;
+}
