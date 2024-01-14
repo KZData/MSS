@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Fetch data and create bar chart
-  fetch("https://raw.githubusercontent.com/KZData/Baqylau/main/Data/Top10Customer.json")
+  fetch("https://raw.githubusercontent.com/KZData/Baqylau/main/Data/V_MAIN_UNFILTERED_PUBLISHED.json")
       .then(response => response.json())
       .then(jsonData => {
           const jsonObj = jsonData;
