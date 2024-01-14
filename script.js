@@ -1,7 +1,35 @@
+let searchDataResults = [];
+
 document.addEventListener("DOMContentLoaded", function () {
-    // Create search table
+    createBarChart([]); // Empty chart by default
     createSearchTable();
 });
+
+function searchData() {
+    const columnElement = document.getElementById('column');
+    const columnEnglish = columnElement.value;
+    const columnRussian = columnElement.options[columnElement.selectedIndex].text;
+    const searchText = document.getElementById('searchText').value.toLowerCase();
+
+    fetch("https://raw.githubusercontent.com/KZData/MSS/main/Data/V_MAIN_UNFILTERED_PUBLISHED.json")
+        .then(response => response.json())
+        .then(jsonData => {
+            searchDataResults = jsonData.filter(item => {
+                const value = item[columnEnglish] || item[columnRussian];
+                return value?.toLowerCase().includes(searchText);
+            });
+
+            displaySearchResults(searchDataResults);
+            createBarChart(getTop20Data(searchDataResults, "Запланированная сумма"));
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function getTop20Data(data, sortBy) {
+    return data
+        .sort((a, b) => b[sortBy] - a[sortBy])
+        .slice(0, 20);
+}
 
 function createSearchTable() {
     const container = document.getElementById('table-container');
@@ -9,16 +37,16 @@ function createSearchTable() {
     const html = `
         <label for="column">Выберите столбец:</label>
         <select id="column">
-            <option value="Announce Number">Номер объявления</option>
-            <option value="Announce Name">Название</option>
-            <option value="Announce Organizer">Организатор</option>
-            <option value="Announce Method">Метод Закупки</option>
-            <option value="Start Date">Дата начала приема заявок</option>
-            <option value="Start Time">Время начала</option>
-            <option value="End Date">Дата окончания</option>
-            <option value="End Time">Время окончания</option>
-            <option value="Announce Amount">Запланированная сумма</option>
-            <option value="Announce Status">Статус</option>
+            <option value="Номер объявления">Номер объявления</option>
+            <option value="Название">Название</option>
+            <option value="Организатор">Организатор</option>
+            <option value="Метод Закупки">Метод Закупки</option>
+            <option value="Дата начала приема заявок">Дата начала приема заявок</option>
+            <option value="Время начала">Время начала</option>
+            <option value="Дата окончания">Дата окончания</option>
+            <option value="Время окончания">Время окончания</option>
+            <option value="Запланированная сумма">Запланированная сумма</option>
+            <option value="Статус">Статус</option>
             <!-- Add more options based on your JSON structure -->
         </select>
 
@@ -39,26 +67,12 @@ function createSearchTable() {
         </table>
     `;
 
-    // JavaScript function to clear the search
-    function clearSearch() {
-        document.getElementById('searchText').value = '';
-        searchData();
-    }
-
     container.innerHTML = html;
 }
 
-function searchData() {
-    const column = document.getElementById('column').value;
-    const searchText = document.getElementById('searchText').value.toLowerCase();
-
-    fetch("https://raw.githubusercontent.com/KZData/MSS/main/Data/V_MAIN_UNFILTERED_PUBLISHED.json")
-        .then(response => response.json())
-        .then(jsonData => {
-            const filteredData = jsonData.filter(item => item[column]?.toLowerCase().includes(searchText));
-            displaySearchResults(filteredData);
-        })
-        .catch(error => console.error('Error:', error));
+function clearSearch() {
+    document.getElementById('searchText').value = '';
+    searchData();
 }
 
 function displaySearchResults(data) {
@@ -101,7 +115,18 @@ function displaySearchResults(data) {
 
         columns.forEach(column => {
             const td = document.createElement('td');
-            td.textContent = item[column];
+            
+            // Check if the column is the URL column
+            if (column === 'Ссылка на объявление на сайте goszakup') {
+                const link = document.createElement('a');
+                link.href = item[column];
+                link.textContent = item[column];
+                link.target = '_blank'; // Open the link in a new tab
+                td.appendChild(link);
+            } else {
+                td.textContent = item[column];
+            }
+
             row.appendChild(td);
         });
 

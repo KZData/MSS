@@ -21,7 +21,6 @@ body {
 
 .header h5 {
     font-size: 12px;
-
 }
 
 .main {
@@ -45,7 +44,8 @@ body {
 .bar-plot {
     width: 50%;
     height: 400px;
-    margin-left: 100px;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
     align-content: flex-start;
 }
